@@ -15,6 +15,10 @@ namespace AutoCare.Controllers
 
         public IActionResult Index()
         {
+            if(User.Identities.Any(i => i.IsAuthenticated))
+            {
+                return RedirectToAction("Index", "Cars");
+            }
             return View();
         }
 

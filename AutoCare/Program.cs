@@ -1,4 +1,6 @@
 using AutoCare.Data;
+using AutoCare.Services;
+using AutoCare.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +25,7 @@ namespace AutoCare
             })
                 .AddEntityFrameworkStores<AutoCareDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<ICarService, CarService>();
 
             var app = builder.Build();
 

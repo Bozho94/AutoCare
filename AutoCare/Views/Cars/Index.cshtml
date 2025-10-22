@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AutoCare.ViewModels.CarViewModel>
+
+@{
+    ViewData["Title"] = "Коли";
+}
+
+<h2 class="text-center mb-4">Моите коли</h2>
+
+<div class="text-center mb-3">
+    <a asp-action="Create" class="btn btn-primary">Добави кола</a>
+</div>
+
+<div class="row">
+    @foreach (var car in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm p-3">
+                <h5 class="card-title">@car.Brand @car.Model</h5>
+                <p class="card-text">
+                    <strong>Рег. номер:</strong> @car.RegistrationNumber <br />
+                    <strong>Година:</strong> @car.YearOfManufacture
+                </p>
+
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <!-- Масло и филтри -->
+                    <a asp-controller="OilAndFilters" asp-action="Index" asp-route-carId="@car.Id"
+                       class="btn @(car.HasOilAndFilters ? "btn-success" : "btn-danger")">
+                        Масло и филтри
+                    </a>
+
+                    <!-- Ремъци и ролки -->
+                    <a asp-controller="BeltsAndRollers" asp-action="Index" asp-route-carId="@car.Id"
+                       class="btn @(car.HasBeltsAndRollers ? "btn-success" : "btn-danger")">
+                        Ремъци и ролки
+                    </a>
+
+                    <!-- Винетка -->
+                    <a asp-controller="Vignettes" asp-action="Index" asp-route-carId="@car.Id"
+                       class="btn @(car.HasVignette ? "btn-success" : "btn-danger")">
+                        Винетка
+                    </a>
+
+                    <!-- Тех. преглед -->
+                    <a asp-controller="TechnicalInspections" asp-action="Index" asp-route-carId="@car.Id"
+                       class="btn @(car.HasTechnicalInspection ? "btn-success" : "btn-danger")">
+                        Тех. преглед
+                    </a>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning">Редактирай</a>
+                    <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger">Изтрий</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-center mt-4">Нямате добавени коли.</p>
+}
