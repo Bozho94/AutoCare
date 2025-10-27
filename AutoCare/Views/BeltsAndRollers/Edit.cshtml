@@ -1,0 +1,35 @@
+﻿@using AutoCare.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model AutoCare.ViewModels.BeltServiceVM
+
+<h2>Редактирай запис (ремъци и ролки)</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Скритите полета -->
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CarId" />
+
+    <div class="mb-3">
+        <label asp-for="ServiceDate" class="form-label"></label>
+        <input asp-for="ServiceDate" type="date" class="form-control" />
+        <span asp-validation-for="ServiceDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OdometerKm" class="form-label"></label>
+        <input asp-for="OdometerKm" class="form-control" />
+        <span asp-validation-for="OdometerKm" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BeltsPumpBrand" class="form-label"></label>
+        <input asp-for="BeltsPumpBrand" class="form-control" />
+        <span asp-validation-for="BeltsPumpBrand" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Запази</button>
+</form>
+
+<partial name="_ValidationScriptsPartial" />

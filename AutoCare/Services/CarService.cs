@@ -64,7 +64,11 @@ namespace AutoCare.Services
                     Brand = c.Brand,
                     Model = c.Model,
                     RegistrationNumber = c.RegistrationNumber,
-                    YearOfManufacture = c.YearOfManufacture
+                    YearOfManufacture = c.YearOfManufacture,
+                    HasOilAndFilters = _db.OilServiceRecords.Any(r => r.CarId == c.Id),
+                    HasBeltsAndRollers = _db.BeltServiceRecords.Any(r => r.CarId == c.Id),
+                    HasVignette = _db.VignetteRecords.Any(r => r.CarId == c.Id),
+                    HasTechnicalInspection = _db.TechnicalInspectionRecords.Any(r => r.CarId == c.Id)
                 })
                 .ToListAsync();
             return list;
@@ -85,6 +89,11 @@ namespace AutoCare.Services
                  })
                  .FirstOrDefaultAsync();
             return viewModel;
+        }
+
+        public async Task<bool> UserOwnsCarAsync(string userId, int carId)
+        {
+            return await _db.Cars.AnyAsync(c => c.Id == carId && c.UserId == userId);
         }
     }
 }

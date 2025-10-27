@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoCare.ViewModels
 {
@@ -6,13 +7,18 @@ namespace AutoCare.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Изберете автомобил (CarId).")]
+        [Display(Name = "Автомобил (CarId)")]
         public int CarId { get; set; }
 
-        [Required]
-        public DateTime PurchaseDate { get; set; }
+        [Required(ErrorMessage = "Въведете дата на покупка.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата на покупка")]
+        public DateOnly PurchaseDate { get; set; }
 
-        [Required]
-        public DateTime ExpiryDate { get; set; }
+        [Required(ErrorMessage = "Въведете дата на изтичане.")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Валидна до")]
+        public DateOnly ExpiryDate { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace AutoCare.Data.Models
         [Required(ErrorMessage = "Моля, въведете дата на прегледа")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на прегледа")]
-        public DateTime InspectionDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateOnly InspectionDate { get; set; }
     }
 }
 

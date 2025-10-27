@@ -1,0 +1,58 @@
+﻿@using AutoCare.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model System.Collections.Generic.List<OilServiceVM>
+
+@{
+    ViewData["Title"] = "Масло и филтри";
+
+    // взимаме carId от query (?carId=...)
+    var carIdStr = Context.Request.Query["carId"].ToString();
+    int carId = 0;
+    int.TryParse(carIdStr, out carId);
+}
+
+<h2>Масло и филтри</h2>
+
+@if (!Model.Any())
+{
+    <div class="mb-3">
+        <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary">Добави</a>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p>Няма записи.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Пробег</th>
+                <th>Вискозитет</th>
+                <th>Марка масло и филтри (по желание)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.OilChangeDate.ToString("yyyy-MM-dd")</td>
+                    <td>@x.OdometerKm</td>
+                    <td>@x.OilViscosity</td>
+                    <td>@x.OilAndFiltersBrand</td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning btn-sm">Редактирай</a>
+                        <form asp-action="Delete" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@x.Id" />
+                            <button class="btn btn-danger btn-sm">Изтрий</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

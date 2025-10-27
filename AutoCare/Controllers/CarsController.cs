@@ -74,6 +74,10 @@ namespace AutoCare.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var owns = await _carService.UserOwnsCarAsync(userId, id);
+            if (!owns) return Forbid();
+
             await _carService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }

@@ -9,5 +9,6 @@ namespace AutoCare.Services.Contracts
         Task AddAsync(CarViewModel model, string userId);
         Task EditAsync(CarViewModel model);
         Task DeleteAsync(int id);
+        Task<bool> UserOwnsCarAsync(string userId, int carId);
     }
 }

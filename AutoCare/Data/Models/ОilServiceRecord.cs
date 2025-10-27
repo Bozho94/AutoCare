@@ -21,7 +21,8 @@ namespace AutoCare.Data.Models
         [Required(ErrorMessage = "Моля, въведете дата на смяна (масло и филтри)")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на смяна (масло и филтри)")]
-        public DateTime OilChangeDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateOnly OilChangeDate { get; set; }
 
         [Required(ErrorMessage = "Моля, въведете пробег при смяна (масло и филтри)")]
         [Range(0, int.MaxValue, ErrorMessage = "Километрите трябва да са неотрицателно число")]

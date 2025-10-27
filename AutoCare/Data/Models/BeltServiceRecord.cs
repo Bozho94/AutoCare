@@ -21,7 +21,8 @@ namespace AutoCare.Data.Models
         [Required(ErrorMessage = "Моля, въведете дата на смяна (ремъци и водна помпа)")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на смяна (ремъци и водна помпа)")]
-        public DateTime ServiceDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateOnly ServiceDate { get; set; }
 
         [Required(ErrorMessage = "Моля, въведете пробег при смяна (ремъци и водна помпа)")]
         [Range(0, int.MaxValue, ErrorMessage = "Километрите трябва да са неотрицателно число")]

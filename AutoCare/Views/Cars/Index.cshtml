@@ -1,4 +1,6 @@
-﻿@model IEnumerable<AutoCare.ViewModels.CarViewModel>
+﻿@using AutoCare.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<AutoCare.ViewModels.CarViewModel>
 
 @{
     ViewData["Title"] = "Коли";
@@ -49,7 +51,10 @@
 
                 <div class="d-flex gap-2">
                     <a asp-action="Edit" asp-route-id="@car.Id" class="btn btn-warning">Редактирай</a>
-                    <a asp-action="Delete" asp-route-id="@car.Id" class="btn btn-danger">Изтрий</a>
+                    <form asp-action="Delete" asp-route-id="@car.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-danger">Изтрий</button>
+                    </form>
                 </div>
             </div>
         </div>

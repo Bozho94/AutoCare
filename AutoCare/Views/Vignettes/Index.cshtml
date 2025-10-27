@@ -1,0 +1,54 @@
+﻿@using AutoCare.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<AutoCare.ViewModels.VignetteVM>
+
+@{
+    ViewData["Title"] = "Винетки";
+
+    // Взимаме CarId от URL-а (напр. /Vignettes?carId=3)
+    var carIdStr = Context.Request.Query["carId"].ToString();
+    int carId = 0;
+    int.TryParse(carIdStr, out carId);
+}
+
+<h2>Винетки</h2>
+
+@if (!Model.Any())
+{
+    <div class="mb-3">
+        <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary">Добави</a>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <p>Няма записи за тази кола.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Дата на покупка</th>
+                <th>Валидна до</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.PurchaseDate.ToString("yyyy-MM-dd")</td>
+                    <td>@x.ExpiryDate.ToString("yyyy-MM-dd")</td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning btn-sm">Редактирай</a>
+                        <form asp-action="Delete" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@x.Id" />
+                            <button class="btn btn-danger btn-sm">Изтрий</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

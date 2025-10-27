@@ -26,6 +26,10 @@ namespace AutoCare
                 .AddEntityFrameworkStores<AutoCareDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<ICarService, CarService>();
+            builder.Services.AddScoped<IOilService, OilService>();
+            builder.Services.AddScoped<IBeltService, BeltService>();
+            builder.Services.AddScoped<IVignetteService, VignetteService>();
+            builder.Services.AddScoped<ITechnicalInspectionService, TechnicalInspectionService>();
 
             var app = builder.Build();
 

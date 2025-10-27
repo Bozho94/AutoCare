@@ -21,12 +21,13 @@ namespace AutoCare.Data.Models
         [Required(ErrorMessage = "Моля, въведете дата на покупка")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на покупка")]
-        public DateTime PurchaseDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateOnly PurchaseDate { get; set; }
 
         [Required(ErrorMessage = "Моля, въведете дата на изтичане")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на изтичане")]
-        public DateTime ExpiryDate { get; set; }
+        public DateOnly ExpiryDate { get; set; }
 
 
     }

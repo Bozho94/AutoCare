@@ -1,0 +1,29 @@
+﻿@using AutoCare.ViewModels
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model AutoCare.ViewModels.VignetteVM
+
+<h2>Редактирай винетка</h2>
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Скритите полета -->
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CarId" />
+
+    <div class="mb-3">
+        <label asp-for="PurchaseDate" class="form-label"></label>
+        <input asp-for="PurchaseDate" type="date" class="form-control" />
+        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ExpiryDate" class="form-label"></label>
+        <input asp-for="ExpiryDate" type="date" class="form-control" />
+        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Запази</button>
+</form>
+
+<partial name="_ValidationScriptsPartial" />
