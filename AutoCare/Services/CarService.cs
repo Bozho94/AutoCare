@@ -16,7 +16,7 @@ namespace AutoCare.Services
         }
         public async Task AddAsync(CarViewModel car, string userId)
         {
-            Car? entity = new Car
+            var entity = new Car
             {
                 Brand = car.Brand,
                 Model = car.Model,
@@ -31,7 +31,7 @@ namespace AutoCare.Services
 
         public async Task DeleteAsync(int id)
         {
-            Car? entity = await _db.Cars.FirstOrDefaultAsync(c => c.Id == id);
+            var entity = await _db.Cars.FirstOrDefaultAsync(c => c.Id == id);
             if(entity != null)
             {
                 _db.Cars.Remove(entity);
@@ -41,7 +41,7 @@ namespace AutoCare.Services
 
         public async Task EditAsync(CarViewModel car)
         {
-            Car? entity = await _db.Cars.FindAsync(car.Id);
+            var entity = await _db.Cars.FindAsync(car.Id);
 
             if(entity != null)
             {
@@ -55,7 +55,7 @@ namespace AutoCare.Services
 
         public async Task<List<CarViewModel>> GetAllAsync(string userId)
         {
-            List<CarViewModel> list = await _db.Cars
+            return await _db.Cars
                 .AsNoTracking()
                 .Where(c => c.UserId == userId)
                 .Select(c => new CarViewModel
@@ -71,12 +71,12 @@ namespace AutoCare.Services
                     HasTechnicalInspection = _db.TechnicalInspectionRecords.Any(r => r.CarId == c.Id)
                 })
                 .ToListAsync();
-            return list;
+           
         }
 
         public async Task<CarViewModel?> GetByIdAsync(int id)
         {
-            CarViewModel? viewModel = await _db.Cars
+             return await _db.Cars
                  .AsNoTracking()
                  .Where(c => c.Id == id)
                  .Select(c => new CarViewModel
@@ -88,7 +88,7 @@ namespace AutoCare.Services
                      YearOfManufacture = c.YearOfManufacture
                  })
                  .FirstOrDefaultAsync();
-            return viewModel;
+            
         }
 
         public async Task<bool> UserOwnsCarAsync(string userId, int carId)

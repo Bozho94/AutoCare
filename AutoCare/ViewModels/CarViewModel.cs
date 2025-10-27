@@ -6,13 +6,17 @@ namespace AutoCare.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Въведете марка")]
+        [Display(Name = "Марка")]
         public string Brand { get; set; } = null!;
-        [Required]
+        [Required(ErrorMessage = "Въведете модел")]
+        [Display(Name = "Модел")]
         public string Model { get; set; } = null!;
-        [Required]
+        [Required(ErrorMessage = "Въведете рег.номер")]
+        [Display(Name = "Регистрационен номер")]
         public string RegistrationNumber { get; set; } = null!;
-        [Required]
+        [Required(ErrorMessage = "Въведете година на производство")]
+        [Display(Name = "Година на производство")]
         public int YearOfManufacture { get; set; }
         public bool HasOilAndFilters { get; set; }
         public bool HasBeltsAndRollers { get; set; }

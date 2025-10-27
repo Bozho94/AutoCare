@@ -4,53 +4,57 @@
 
 @{
     ViewData["Title"] = "Ремъци и ролки";
-
-    // Вземаме carId от URL-а (напр. /BeltsAndRollers?carId=5)
     var carIdStr = Context.Request.Query["carId"].ToString();
     int carId = 0;
     int.TryParse(carIdStr, out carId);
 }
 
-<h2>Ремъци и ролки</h2>
+<div class="container mt-5">
 
-@if (!Model.Any())
-{
-    <div class="mb-3">
-        <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary">Добави</a>
-    </div>
-}
+    <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">
+        Ремъци и ролки
+    </h2>
 
-@if (!Model.Any())
-{
-    <p>Няма записи за тази кола.</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Дата на смяна</th>
-                <th>Пробег (км)</th>
-                <th>Марка (по желание)</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in Model)
-            {
-                <tr>
-                    <td>@x.ServiceDate.ToString("yyyy-MM-dd")</td>
-                    <td>@x.OdometerKm</td>
-                    <td>@x.BeltsPumpBrand</td>
-                    <td class="text-end">
-                        <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning btn-sm">Редактирай</a>
-                        <form asp-action="Delete" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@x.Id" />
-                            <button class="btn btn-danger btn-sm">Изтрий</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+    @if (!Model.Any())
+    {
+        <div class="text-center mb-4">
+            <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle"></i> Добави
+            </a>
+        </div>
+
+        <p class="text-center text-muted">Няма записи за тази кола.</p>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <div class="card shadow-lg border-0" style="width: 420px;">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-4" style="font-size: 1.3rem;">
+                        <i class="bi bi-gear-fill text-secondary"></i> Информация за последна смяна
+                    </h5>
+
+                    @foreach (var x in Model)
+                    {
+                        <div class="text-center">
+                            <p><strong>Дата:</strong> @x.ServiceDate.ToString("yyyy-MM-dd")</p>
+                            <p><strong>Пробег:</strong> @x.OdometerKm км</p>
+							@if (!string.IsNullOrEmpty(x.BeltsPumpBrand))
+                            {
+                                <p><strong>Марка ремъци и ролки:</strong> @x.BeltsPumpBrand</p>
+                            }
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning me-2">Редактирай</a>
+                                <form asp-action="Delete" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@x.Id" />
+                                    <button class="btn btn-danger">Изтрий</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

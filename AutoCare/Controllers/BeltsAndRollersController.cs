@@ -31,7 +31,10 @@ namespace AutoCare.Controllers
         public async Task<IActionResult> Create(BeltServiceVM vm)
         {
             if (!ModelState.IsValid)
+            {
                 return View(vm);
+            }    
+               
 
             await _service.AddAsync(vm);
             return RedirectToAction(nameof(Index), new { carId = vm.CarId });
@@ -42,7 +45,10 @@ namespace AutoCare.Controllers
         {
             var vm = await _service.GetByIdAsync(id);
             if (vm == null)
+            {
                 return NotFound();
+            }
+                
 
             return View(vm);
         }

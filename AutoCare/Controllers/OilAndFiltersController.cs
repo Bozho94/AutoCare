@@ -39,7 +39,11 @@ namespace AutoCare.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var vm = await _service.GetByIdAsync(id);
-            if (vm == null) return NotFound();
+            if (vm == null)
+            {
+                return NotFound();
+            }
+
             return View(vm);
         }
 

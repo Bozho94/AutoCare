@@ -20,7 +20,7 @@ namespace AutoCare.Controllers
         public async Task <IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var model = await _carService.GetAllAsync(userId);
+            var model = await _carService.GetAllAsync(userId!);
             return View(model);
         }
 
