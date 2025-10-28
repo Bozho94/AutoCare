@@ -21,7 +21,7 @@ It allows users to register, add their cars, and track important maintenance eve
 
 🔹 Main features:
 - Add and edit cars  
-- Record oil, belt, vignette, and inspection data  
+- Record oil, belts, vignette, and inspection data  
 - Modern UI using **Bootswatch Sandstone** theme  
 
 📘 Current version: **Beta**  
