@@ -1,5 +1,5 @@
 # AutoCare 🚗  
-### 🇧🇬 Български
+### Български
 
 **AutoCare** е ASP.NET Core MVC уеб приложение за управление и поддръжка на автомобили.  
 Позволява на потребителите да създават профили, добавят свои автомобили и записват важни събития като смяна на масло, ремъци, винетка и технически преглед.  
@@ -14,7 +14,7 @@
 
 ---
 
-### 🇬🇧 English
+### English
 
 **AutoCare** is an ASP.NET Core MVC web application for managing car maintenance and service records.  
 It allows users to register, add their cars, and track important maintenance events such as oil changes, belts, vignettes, and technical inspections.
