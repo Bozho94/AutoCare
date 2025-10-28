@@ -12,7 +12,7 @@
 
     <div class="mb-3">
         <label asp-for="ServiceDate" class="form-label"></label>
-        <input asp-for="ServiceDate" type="date" class="form-control" />
+        <input asp-for="ServiceDate" type="date" class="form-control" asp-format="{0:yyyy-MM-dd} />
         <span asp-validation-for="ServiceDate" class="text-danger"></span>
     </div>
 

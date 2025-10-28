@@ -13,7 +13,7 @@
 
     <div class="mb-3">
         <label asp-for="OilChangeDate" class="form-label"></label>
-        <input asp-for="OilChangeDate" type="date" class="form-control" />
+        <input asp-for="OilChangeDate" type="date" class="form-control" asp-format="{0:yyyy-MM-dd} />
         <span asp-validation-for="OilChangeDate" class="text-danger"></span>
     </div>
 
