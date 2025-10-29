@@ -7,7 +7,6 @@
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
 
-    <!-- Скритите полета -->
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="CarId" />
 
@@ -21,6 +20,12 @@
         <label asp-for="ExpiryDate" class="form-label"></label>
         <input asp-for="ExpiryDate" type="date" class="form-control" asp-format="{0:yyyy-MM-dd} />
         <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-controller="Cars" asp-action="Index" class="btn btn-secondary">
+            ⬅️ Назад към моите автомобили
+        </a>
     </div>
 
     <button type="submit" class="btn btn-success">Запази</button>
