@@ -22,6 +22,10 @@ namespace AutoCare
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
+                options.Password.RequireNonAlphanumeric=false;
+                options.Password.RequireLowercase=false;
+                options.Password.RequireUppercase=false;
+                options.Password.RequireDigit=false;
             })
                 .AddEntityFrameworkStores<AutoCareDbContext>();
             builder.Services.AddControllersWithViews();

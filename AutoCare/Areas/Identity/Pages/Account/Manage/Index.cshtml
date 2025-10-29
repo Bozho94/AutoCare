@@ -19,6 +19,32 @@
     </div>
 </div>
 
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    Изтрий профила и всички данни
+</button>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">⚠️ Изтриване на профил</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да изтриете профила си?<br />
+                <strong>Това действие е необратимо</strong> и ще премахне всички данни, които сте записали в AutoCare.
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="DeleteAccount">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отказ</button>
+                    <button type="submit" class="btn btn-danger">Да, изтрий</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

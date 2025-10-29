@@ -6,9 +6,11 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoCare.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoCare.Areas.Identity.Pages.Account.Manage
 {
@@ -16,13 +18,15 @@ namespace AutoCare.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly AutoCareDbContext _db;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager, AutoCareDbContext db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _db = db;
         }
 
         /// <summary>
@@ -114,5 +118,28 @@ namespace AutoCare.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
+        public async Task<IActionResult> OnPostDeleteAccountAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound("Не е намерен потребител.");
+            }
+
+            var userId = user.Id;
+
+            await _db.VignetteRecords.Where(v => v.Car.UserId == userId).ExecuteDeleteAsync();
+            await _db.OilServiceRecords.Where(o => o.Car.UserId == userId).ExecuteDeleteAsync();
+            await _db.BeltServiceRecords.Where(b => b.Car.UserId == userId).ExecuteDeleteAsync();
+            await _db.TechnicalInspectionRecords.Where(t => t.Car.UserId == userId).ExecuteDeleteAsync();
+            await _db.Cars.Where(c => c.UserId == userId).ExecuteDeleteAsync();
+
+            await _userManager.DeleteAsync(user);
+            await _signInManager.SignOutAsync();
+
+            return Redirect("~/");
+        }
+
     }
 }
