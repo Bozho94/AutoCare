@@ -32,25 +32,29 @@ namespace AutoCare.Services
         public async Task DeleteAsync(int id)
         {
             var entity = await _db.Cars.FirstOrDefaultAsync(c => c.Id == id);
-            if(entity != null)
+
+            if(entity is null)
             {
-                _db.Cars.Remove(entity);
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            _db.Cars.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
         public async Task EditAsync(CarViewModel car)
         {
             var entity = await _db.Cars.FindAsync(car.Id);
 
-            if(entity != null)
+            if(entity is null)
             {
-                entity.Brand = car.Brand;
-                entity.Model = car.Model;
-                entity.RegistrationNumber = car.RegistrationNumber;
-                entity.YearOfManufacture = car.YearOfManufacture;
-                await _db.SaveChangesAsync();
+                return;
             }
+            entity.Brand = car.Brand;
+            entity.Model = car.Model;
+            entity.RegistrationNumber = car.RegistrationNumber;
+            entity.YearOfManufacture = car.YearOfManufacture;
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<CarViewModel>> GetAllAsync(string userId)

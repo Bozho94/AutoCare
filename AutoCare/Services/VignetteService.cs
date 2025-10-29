@@ -32,27 +32,31 @@ namespace AutoCare.Services
         public async Task DeleteAsync(int id)
         {
             var entity = _db.VignetteRecords.FirstOrDefault(r => r.Id == id);
-            if (entity != null)
+
+            if (entity is null)
             {
-                _db.VignetteRecords.Remove(entity);
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            _db.VignetteRecords.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
 
 
         public async Task EditAsync(VignetteVM model)
         {
-            var entity = _db.VignetteRecords.FindAsync(model.Id);
+            var entity = await _db.VignetteRecords.FindAsync(model.Id);
 
-            if (entity != null)
+            if (entity is null)
             {
-                entity.Result.CarId = model.CarId;
-                entity.Result.PurchaseDate = model.PurchaseDate;
-                entity.Result.ExpiryDate = model.ExpiryDate;
-
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            entity.CarId = model.CarId;
+            entity.PurchaseDate = model.PurchaseDate;
+            entity.ExpiryDate = model.ExpiryDate;
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<VignetteVM>> GetAllAsync(string userId, int carId)

@@ -31,23 +31,29 @@ namespace AutoCare.Services
         public async Task DeleteAsync(int id)
         {
             var entity = await _db.TechnicalInspectionRecords.FirstOrDefaultAsync(x => x.Id == id);
-            if (entity != null)
+
+            if (entity is null)
             {
-                _db.TechnicalInspectionRecords.Remove(entity);
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            _db.TechnicalInspectionRecords.Remove(entity);
+            await _db.SaveChangesAsync();
+
         }
 
         public async Task EditAsync(TechnicalInspectionVM model)
         {
             var entity = await _db.TechnicalInspectionRecords.FindAsync(model.Id);
-            if (entity != null)
-            {
-                entity.CarId = model.CarId;
-                entity.InspectionDate = model.InspectionDate;
 
-                await _db.SaveChangesAsync();
+            if (entity is null)
+            {
+                return;
             }
+            entity.CarId = model.CarId;
+            entity.InspectionDate = model.InspectionDate;
+
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<TechnicalInspectionVM>> GetAllAsync(string userId, int carId)

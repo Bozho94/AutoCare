@@ -33,27 +33,32 @@ namespace AutoCare.Services
         public async Task DeleteAsync(int id)
         {
             var entity = await _db.OilServiceRecords.FirstOrDefaultAsync(o => o.Id == id);
-            if (entity != null)
+
+            if (entity is null)
             {
-                _db.OilServiceRecords.Remove(entity);
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            _db.OilServiceRecords.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
         public async Task EditAsync(OilServiceVM model)
         {
             var entity = await _db.OilServiceRecords.FindAsync(model.Id);
-            if (entity != null)
-            {
-                entity.CarId = model.CarId;
-                entity.OilChangeDate = model.OilChangeDate;
-                entity.OdometerKm = model.OdometerKm;
-                entity.OilViscosity = model.OilViscosity;
-                entity.OilAndFiltersBrand = model.OilAndFiltersBrand;
 
-                await _db.SaveChangesAsync();
+            if (entity is null)
+            {
+                return;
             }
-            
+
+            entity.CarId = model.CarId;
+            entity.OilChangeDate = model.OilChangeDate;
+            entity.OdometerKm = model.OdometerKm;
+            entity.OilViscosity = model.OilViscosity;
+            entity.OilAndFiltersBrand = model.OilAndFiltersBrand;
+            await _db.SaveChangesAsync();
+
         }
 
         public async Task<List<OilServiceVM>> GetAllAsync(string userId, int carId)

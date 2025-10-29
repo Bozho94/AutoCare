@@ -32,25 +32,29 @@ namespace AutoCare.Services
         public async Task DeleteAsync(int id)
         {
             var entity = await _db.BeltServiceRecords.FirstOrDefaultAsync(r => r.Id == id);
-            if (entity != null)
-            {
-                _db.BeltServiceRecords.Remove(entity);
-                await _db.SaveChangesAsync();
 
+            if (entity is null)
+            {
+                return;
             }
+            _db.BeltServiceRecords.Remove(entity);
+            await _db.SaveChangesAsync();
         }
 
         public async Task EditAsync(BeltServiceVM model)
         {
             var entity = await _db.BeltServiceRecords.FindAsync(model.Id);
-            if (entity != null)
+
+            if (entity is null)
             {
-                entity.CarId = model.CarId;
-                entity.ServiceDate = model.ServiceDate;
-                entity.OdometerKm = model.OdometerKm;
-                entity.BeltsPumpBrand = model.BeltsPumpBrand;
-                await _db.SaveChangesAsync();
+                return;
             }
+
+            entity.CarId = model.CarId;
+            entity.ServiceDate = model.ServiceDate;
+            entity.OdometerKm = model.OdometerKm;
+            entity.BeltsPumpBrand = model.BeltsPumpBrand;
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<BeltServiceVM>> GetAllAsync(string userId, int carId)
