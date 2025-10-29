@@ -12,6 +12,11 @@
     <a asp-action="Create" class="btn btn-primary">Добави автомобил</a>
 </div>
 
+@if (!Model.Any())
+{
+    <p class="text-center mt-4">Нямате добавени коли.</p>
+}
+
 <div class="row">
     @foreach (var car in Model)
     {
@@ -61,7 +66,4 @@
     }
 </div>
 
-@if (!Model.Any())
-{
-    <p class="text-center mt-4">Нямате добавени коли.</p>
-}
+
