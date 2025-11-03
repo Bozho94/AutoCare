@@ -45,29 +45,18 @@
                     @{
                         var x = Model.First();
 
-                        var totalDays = x.ExpiryDate.DayNumber - x.PurchaseDate.DayNumber;
+                        var today = DateOnly.FromDateTime(DateTime.Today);
                         string validityText;
-                        if (totalDays < 0) totalDays = 0;
-                        {
-                            int years = totalDays / 365;
-                            int remainingDays = totalDays % 365;
-                            int months = remainingDays / 30;
-                            int days = remainingDays % 30;
 
-                            if (years > 0)
-                            {
-                                validityText = $"{years} г.";
-                            }
-                            else if (months > 0)
-                            {
-                                validityText = $"{months} мес. {days} дни";
-                            }
-                            else
-                            {
-                                validityText = $"{days} дни";
-                            }
-                        
+                        if (x.ExpiryDate >= today)
+                        {
+                            validityText = "✅ Винетката е валидна";
                         }
+                        else
+                        {
+                            validityText = "❌ Винетката е невалидна";
+                        }
+                  
 
                     }
 
