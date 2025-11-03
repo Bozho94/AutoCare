@@ -38,18 +38,32 @@
             <div class="card shadow-lg border-0" style="width: 420px;">
                 <div class="card-body">
                     <h5 class="card-title text-center mb-4" style="font-size: 1.3rem;">
-						<i class="bi bi-clipboard2-check text-secondary"></i> Информация за последен преглед
+                        <i class="bi bi-clipboard2-check text-secondary"></i> Информация за последен преглед
                     </h5>
 
                     @foreach (var x in Model)
                     {
+                        var today = DateOnly.FromDateTime(DateTime.Today);
+
+
                         <div class="text-center">
                             <p><strong>Дата на преглед:</strong> @x.InspectionDate.ToString("dd.MM.yyyy")</p>
                             <p><strong>Валиден до:</strong> @(x.InspectionDate.AddYears(1).ToString("dd.MM.yyyy"))</p>
 
-                            <div class="alert alert-info py-2 mt-3">
-                                Прегледът е валиден 1 година.
-                            </div>
+                            @if(x.InspectionDate.AddYears(1) >= today)
+                            {
+                                <div class="alert alert-info py-2 mt-3">
+                                    ✅ Прегледът е валиден!
+                                </div>
+                            }
+
+                            else
+                            {
+                                <div class="alert alert-info py-2 mt-3">
+                                    ❌ Прегледът е изтекъл!
+                                </div>
+                            }
+                           
 
                             <div class="d-flex justify-content-center mt-3">
                                 <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning me-2">Редактирай</a>
