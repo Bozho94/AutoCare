@@ -7,13 +7,12 @@ namespace AutoCare.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Изберете автомобил (CarId).")]
-        [Display(Name = "Автомобил (CarId)")]
+        [Required]
         public int CarId { get; set; }
 
-        [Required(ErrorMessage = "Въведете дата на покупка.")]
+        [Required(ErrorMessage = "Моля, въведете начална дата на валидност")]
         [DataType(DataType.Date)]
-        [Display(Name = "Дата на покупка")]
+        [Display(Name = "Начална дата на валидност")]
         public DateOnly PurchaseDate { get; set; }
 
         [Required(ErrorMessage = "Въведете дата на изтичане.")]

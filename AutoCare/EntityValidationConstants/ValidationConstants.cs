@@ -21,5 +21,10 @@
         {
            public const int BeltsPumpBrandMaxLength = 200;
         }
+
+        public static class CivilLiabilityInsurance
+        {
+            public const int InsuranceCompanyNameMaxLength = 50;
+        }
     }
 }

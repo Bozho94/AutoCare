@@ -36,8 +36,10 @@
     </div>
 
     <div class="text-center mt-4">
-        <a asp-controller="OilAndFilters" asp-action="Index" class="btn btn-secondary">
-            ⬅️ Назад 
+        <a asp-action="Index"
+           asp-route-carId="@Model.CarId"
+           class="btn btn-secondary">
+            ⬅️ Назад
         </a>
 
         <button type="submit" class="btn btn-success">Запази</button>

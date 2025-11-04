@@ -50,6 +50,9 @@ namespace AutoCare.Data.Models
         [InverseProperty(nameof(TechnicalInspectionRecord.Car))]
         public TechnicalInspectionRecord? TechnicalInspectionRecord { get; set; }
 
+        [InverseProperty(nameof(CivilLiabilityInsurance.Car))]
+        public CivilLiabilityInsurance? CivilLiabilityInsurance { get; set; }
+
 
     }
 }

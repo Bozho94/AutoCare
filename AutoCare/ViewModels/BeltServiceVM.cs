@@ -7,8 +7,7 @@ namespace AutoCare.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Изберете автомобил (CarId).")]
-        [Display(Name = "Автомобил (CarId)")]
+        [Required]
         public int CarId { get; set; }
 
         [Required(ErrorMessage = "Въведете дата на смяната.")]

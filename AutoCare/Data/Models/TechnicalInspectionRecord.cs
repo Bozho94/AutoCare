@@ -4,9 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoCare.Data.Models
 {
-
-    // Unique index to ensure one-to-one relationship with Car
-    [Index(nameof(CarId), IsUnique = true)]
     public class TechnicalInspectionRecord
     {
         [Key]

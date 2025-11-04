@@ -52,6 +52,12 @@
                        class="btn @(car.HasTechnicalInspection ? "btn-success" : "btn-danger")">
                         Тех. преглед
                     </a>
+
+                    <!-- Г. отговорност -->
+                    <a asp-controller="CivilLiabilityInsurances" asp-action="Index" asp-route-carId="@car.Id"
+                       class="btn @(car.HasCivilLiabilityInsurance ? "btn-success" : "btn-danger")">
+                        Гражданска отговорност
+                    </a>
                 </div>
 
                 <div class="d-flex gap-2">

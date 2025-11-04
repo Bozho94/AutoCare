@@ -89,6 +89,36 @@ namespace AutoCare.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("AutoCare.Data.Models.CivilLiabilityInsurance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("InsuranceCompanyName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateOnly>("IssueDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId")
+                        .IsUnique();
+
+                    b.ToTable("CivilLiabilityInsurances");
+                });
+
             modelBuilder.Entity("AutoCare.Data.Models.OilServiceRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -392,6 +422,17 @@ namespace AutoCare.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AutoCare.Data.Models.CivilLiabilityInsurance", b =>
+                {
+                    b.HasOne("AutoCare.Data.Models.Car", "Car")
+                        .WithOne("CivilLiabilityInsurance")
+                        .HasForeignKey("AutoCare.Data.Models.CivilLiabilityInsurance", "CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("AutoCare.Data.Models.OilServiceRecord", b =>
                 {
                     b.HasOne("AutoCare.Data.Models.Car", "Car")
@@ -479,6 +520,8 @@ namespace AutoCare.Migrations
             modelBuilder.Entity("AutoCare.Data.Models.Car", b =>
                 {
                     b.Navigation("BeltServiceRecord");
+
+                    b.Navigation("CivilLiabilityInsurance");
 
                     b.Navigation("OilServiceRecord");
 

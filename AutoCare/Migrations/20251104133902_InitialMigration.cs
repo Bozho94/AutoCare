@@ -187,7 +187,7 @@ namespace AutoCare.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CarId = table.Column<int>(type: "integer", nullable: false),
-                    ServiceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ServiceDate = table.Column<DateOnly>(type: "date", nullable: false),
                     OdometerKm = table.Column<int>(type: "integer", nullable: false),
                     BeltsPumpBrand = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
                 },
@@ -203,13 +203,35 @@ namespace AutoCare.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CivilLiabilityInsurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CarId = table.Column<int>(type: "integer", nullable: false),
+                    InsuranceCompanyName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IssueDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    ExpiryDate = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CivilLiabilityInsurances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CivilLiabilityInsurances_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OilServiceRecords",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CarId = table.Column<int>(type: "integer", nullable: false),
-                    OilChangeDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OilChangeDate = table.Column<DateOnly>(type: "date", nullable: false),
                     OdometerKm = table.Column<int>(type: "integer", nullable: false),
                     OilViscosity = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     OilAndFiltersBrand = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
@@ -232,7 +254,7 @@ namespace AutoCare.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CarId = table.Column<int>(type: "integer", nullable: false),
-                    InspectionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    InspectionDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,8 +274,8 @@ namespace AutoCare.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CarId = table.Column<int>(type: "integer", nullable: false),
-                    PurchaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    PurchaseDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    ExpiryDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -306,8 +328,7 @@ namespace AutoCare.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BeltServiceRecords_CarId",
                 table: "BeltServiceRecords",
-                column: "CarId",
-                unique: true);
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_UserId_RegistrationNumber",
@@ -316,22 +337,24 @@ namespace AutoCare.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_CivilLiabilityInsurances_CarId",
+                table: "CivilLiabilityInsurances",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OilServiceRecords_CarId",
                 table: "OilServiceRecords",
-                column: "CarId",
-                unique: true);
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TechnicalInspectionRecords_CarId",
                 table: "TechnicalInspectionRecords",
-                column: "CarId",
-                unique: true);
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VignetteRecords_CarId",
                 table: "VignetteRecords",
-                column: "CarId",
-                unique: true);
+                column: "CarId");
         }
 
         /// <inheritdoc />
@@ -354,6 +377,9 @@ namespace AutoCare.Migrations
 
             migrationBuilder.DropTable(
                 name: "BeltServiceRecords");
+
+            migrationBuilder.DropTable(
+                name: "CivilLiabilityInsurances");
 
             migrationBuilder.DropTable(
                 name: "OilServiceRecords");

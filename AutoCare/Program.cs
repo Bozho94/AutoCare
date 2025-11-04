@@ -34,6 +34,7 @@ namespace AutoCare
             builder.Services.AddScoped<IBeltService, BeltService>();
             builder.Services.AddScoped<IVignetteService, VignetteService>();
             builder.Services.AddScoped<ITechnicalInspectionService, TechnicalInspectionService>();
+            builder.Services.AddScoped<ICivilLiabilityInsuranceService, CivilLiabilityInsuranceService>();
 
             var app = builder.Build();
 

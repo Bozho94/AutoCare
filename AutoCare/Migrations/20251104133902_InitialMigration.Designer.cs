@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AutoCare.Migrations
 {
     [DbContext(typeof(AutoCareDbContext))]
-    [Migration("20251020093924_InitialMigration")]
+    [Migration("20251104133902_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -43,8 +43,8 @@ namespace AutoCare.Migrations
                     b.Property<int>("OdometerKm")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("ServiceDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("ServiceDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -92,6 +92,36 @@ namespace AutoCare.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("AutoCare.Data.Models.CivilLiabilityInsurance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("InsuranceCompanyName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateOnly>("IssueDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId")
+                        .IsUnique();
+
+                    b.ToTable("CivilLiabilityInsurances");
+                });
+
             modelBuilder.Entity("AutoCare.Data.Models.OilServiceRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -110,8 +140,8 @@ namespace AutoCare.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTime>("OilChangeDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("OilChangeDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("OilViscosity")
                         .IsRequired()
@@ -137,8 +167,8 @@ namespace AutoCare.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("InspectionDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("InspectionDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -159,11 +189,11 @@ namespace AutoCare.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("PurchaseDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -395,6 +425,17 @@ namespace AutoCare.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AutoCare.Data.Models.CivilLiabilityInsurance", b =>
+                {
+                    b.HasOne("AutoCare.Data.Models.Car", "Car")
+                        .WithOne("CivilLiabilityInsurance")
+                        .HasForeignKey("AutoCare.Data.Models.CivilLiabilityInsurance", "CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+                });
+
             modelBuilder.Entity("AutoCare.Data.Models.OilServiceRecord", b =>
                 {
                     b.HasOne("AutoCare.Data.Models.Car", "Car")
@@ -482,6 +523,8 @@ namespace AutoCare.Migrations
             modelBuilder.Entity("AutoCare.Data.Models.Car", b =>
                 {
                     b.Navigation("BeltServiceRecord");
+
+                    b.Navigation("CivilLiabilityInsurance");
 
                     b.Navigation("OilServiceRecord");
 

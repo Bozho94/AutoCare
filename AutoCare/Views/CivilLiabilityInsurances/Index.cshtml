@@ -1,9 +1,9 @@
 ﻿@using AutoCare.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<OilServiceVM>
+@model List<CivilLiabilityInsuranceVM>
 
 @{
-    ViewData["Title"] = "Масло и филтри";
+    ViewData["Title"] = "Гражданска отговорност";
 
     // взимаме carId от query (?carId=...)
     var carIdStr = Context.Request.Query["carId"].ToString();
@@ -14,9 +14,10 @@
 <div class="container mt-5">
 
     <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">
-        Масло и филтри
+        Гражданска отговорност
     </h2>
 
+    <!-- бутонът "Добави" винаги да го има -->
     <div class="text-center mb-4">
         <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary btn-lg">
             <i class="bi bi-plus-circle"></i> Добави
@@ -35,27 +36,29 @@
     }
     else
     {
-        // подреждаме по Id (най-новият запис първи)
+        // най-новата гражданска – по най-голямо Id
         var ordered = Model.OrderByDescending(x => x.Id).ToList();
         var current = ordered.First();
         var oldRecords = ordered.Skip(1).ToList();
+
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        bool isValid = current.ExpiryDate >= today;
 
         <div class="d-flex justify-content-center mb-4">
             <div class="card shadow-lg border-0" style="width: 460px;">
                 <div class="card-body">
                     <h5 class="card-title text-center mb-4" style="font-size: 1.3rem;">
-                        <i class="bi bi-droplet text-secondary"></i> Последна смяна
+                        <i class="bi bi-ticket-perforated text-secondary"></i> Последна полица
                     </h5>
 
                     <div class="text-center">
-                        <p><strong>Дата на смяна:</strong> @current.OilChangeDate.ToString("dd.MM.yyyy")</p>
-                        <p><strong>Пробег:</strong> @current.OdometerKm км</p>
-                        <p><strong>Вискозитет:</strong> @current.OilViscosity</p>
+                        <p><strong>Застраховател:</strong> @current.InsuranceCompanyName</p>
+                        <p><strong>Дата на издаване:</strong> @current.IssueDate.ToString("dd.MM.yyyy")</p>
+                        <p><strong>Валидна до:</strong> @current.ExpiryDate.ToString("dd.MM.yyyy")</p>
 
-                        @if (!string.IsNullOrEmpty(current.OilAndFiltersBrand))
-                        {
-                            <p><strong>Марка масло и филтри:</strong> @current.OilAndFiltersBrand</p>
-                        }
+                        <div class="alert @(isValid ? "alert-success" : "alert-danger") py-2 mt-3">
+                            @(isValid ? "✅ Валидна!" : "❌ Изтекла!")
+                        </div>
 
                         <div class="d-flex justify-content-center mt-4">
                             <a asp-action="Edit" asp-route-id="@current.Id" class="btn btn-warning me-2">Редактирай</a>
@@ -83,22 +86,19 @@
             <div class="row">
                 @foreach (var item in oldRecords)
                 {
+                    var oldValid = item.ExpiryDate >= today;
                     <div class="col-md-6 mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <p><strong>Дата:</strong> @item.OilChangeDate.ToString("dd.MM.yyyy")</p>
-                                <p><strong>Пробег:</strong> @item.OdometerKm км</p>
+                                <p><strong>Застраховател:</strong> @item.InsuranceCompanyName</p>
+                                <p><strong>Дата на издаване:</strong> @item.IssueDate.ToString("dd.MM.yyyy")</p>
+                                <p><strong>Валидна до:</strong> @item.ExpiryDate.ToString("dd.MM.yyyy")</p>
+                                <p>
+                                    <strong>Статус:</strong>
+                                    @(oldValid ? "Валидна" : "Изтекла")
+                                </p>
 
-                                @if (!string.IsNullOrEmpty(item.OilViscosity))
-                                {
-                                    <p><strong>Вискозитет:</strong> @item.OilViscosity</p>
-                                }
-
-                                @if (!string.IsNullOrEmpty(item.OilAndFiltersBrand))
-                                {
-                                    <p><strong>Марка:</strong> @item.OilAndFiltersBrand</p>
-                                }
-
+                                <!-- само Изтрий за старите -->
                                 <form asp-action="Delete" method="post" class="mt-2">
                                     <input type="hidden" name="id" value="@item.Id" />
                                     <button class="btn btn-sm btn-danger">Изтрий</button>

@@ -72,7 +72,8 @@ namespace AutoCare.Services
                     HasOilAndFilters = _db.OilServiceRecords.Any(r => r.CarId == c.Id),
                     HasBeltsAndRollers = _db.BeltServiceRecords.Any(r => r.CarId == c.Id),
                     HasVignette = _db.VignetteRecords.Any(r => r.CarId == c.Id),
-                    HasTechnicalInspection = _db.TechnicalInspectionRecords.Any(r => r.CarId == c.Id)
+                    HasTechnicalInspection = _db.TechnicalInspectionRecords.Any(r => r.CarId == c.Id),
+                    HasCivilLiabilityInsurance = _db.CivilLiabilityInsurances.Any(r => r.CarId == c.Id)
                 })
                 .ToListAsync();
            

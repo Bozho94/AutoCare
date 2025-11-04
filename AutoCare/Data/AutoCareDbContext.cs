@@ -19,6 +19,7 @@ namespace AutoCare.Data
         public DbSet<BeltServiceRecord> BeltServiceRecords { get; set; } = null!;
         public DbSet<VignetteRecord> VignetteRecords { get; set; } = null!;
         public DbSet<TechnicalInspectionRecord> TechnicalInspectionRecords { get; set; } = null!;
+        public DbSet<CivilLiabilityInsurance> CivilLiabilityInsurances { get; set; } = null!;
 
     }
 }

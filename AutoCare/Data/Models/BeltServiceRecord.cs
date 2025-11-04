@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static AutoCare.EntityValidationConstants.ValidationConstants.BeltServiceRecord;
 namespace AutoCare.Data.Models
 {
-    // Unique index to ensure one-to-one relationship with Car
-    [Index(nameof(CarId), IsUnique = true)]
+  
     public class BeltServiceRecord 
     {
         [Key]

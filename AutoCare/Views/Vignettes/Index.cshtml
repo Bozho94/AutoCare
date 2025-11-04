@@ -1,11 +1,11 @@
 ﻿@using AutoCare.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<AutoCare.ViewModels.VignetteVM>
+@model List<VignetteVM>
 
 @{
-    ViewData["Title"] = "Винетки";
+    ViewData["Title"] = "Винетка";
 
-    // Взимаме CarId от URL-а (напр. /Vignettes?carId=3)
+    // взимаме carId от query (?carId=...)
     var carIdStr = Context.Request.Query["carId"].ToString();
     int carId = 0;
     int.TryParse(carIdStr, out carId);
@@ -14,17 +14,17 @@
 <div class="container mt-5">
 
     <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">
-        Винеткa
+        Винетка
     </h2>
+
+    <div class="text-center mb-4">
+        <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle"></i> Добави
+        </a>
+    </div>
 
     @if (!Model.Any())
     {
-        <div class="text-center mb-4">
-            <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary btn-lg">
-                <i class="bi bi-plus-circle"></i> Добави
-            </a>
-        </div>
-
         <p class="text-center text-muted">Няма записи за тази кола.</p>
 
         <div class="text-center mt-4">
@@ -35,45 +35,37 @@
     }
     else
     {
-        <div class="d-flex justify-content-center">
+        // най-новата винетка е с най-голямо Id
+        var ordered = Model.OrderByDescending(x => x.Id).ToList();
+        var current = ordered.First();
+        var oldRecords = ordered.Skip(1).ToList();
+
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        bool isValid = current.ExpiryDate >= today;
+
+        <div class="d-flex justify-content-center mb-4">
             <div class="card shadow-lg border-0" style="width: 460px;">
                 <div class="card-body">
                     <h5 class="card-title text-center mb-4" style="font-size: 1.3rem;">
-                        <i class="bi bi-ticket-perforated text-secondary"></i>  Информация
+                        <i class="bi bi-ticket-perforated text-secondary"></i> Последна винетка
                     </h5>
 
-                    @{
-                        var x = Model.First();
-
-                        var today = DateOnly.FromDateTime(DateTime.Today);
-                        string validityText;
-
-                        if (x.ExpiryDate >= today)
-                        {
-                            validityText = "✅ Винетката е валидна!";
-                        }
-                        else
-                        {
-                            validityText = "❌ Винетката е невалидна!";
-                        }
-                  
-
-                    }
-
                     <div class="text-center">
-                        <p><strong>Дата на покупка:</strong> @x.PurchaseDate.ToString("dd.MM.yyyy")</p>
-                        <p><strong>Валидна до:</strong> @x.ExpiryDate.ToString("dd.MM.yyyy")</p>
-                        <div class="alert alert-info py-2 mt-3">
-                                @validityText
+                        <p><strong>Дата на покупка:</strong> @current.PurchaseDate.ToString("dd.MM.yyyy")</p>
+                        <p><strong>Валидна до:</strong> @current.ExpiryDate.ToString("dd.MM.yyyy")</p>
+
+                        <div class="alert @(isValid ? "alert-success" : "alert-danger") py-2 mt-3">
+                            @(isValid ? "✅ Валидна!" : "❌ Изтекла!")
                         </div>
 
                         <div class="d-flex justify-content-center mt-4">
-                            <a asp-action="Edit" asp-route-id="@x.Id" class="btn btn-warning me-2">Редактирай</a>
+                            <a asp-action="Edit" asp-route-id="@current.Id" class="btn btn-warning me-2">Редактирай</a>
                             <form asp-action="Delete" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@x.Id" />
+                                <input type="hidden" name="id" value="@current.Id" />
                                 <button class="btn btn-danger">Изтрий</button>
                             </form>
                         </div>
+
                         <div class="text-center mt-4">
                             <a asp-controller="Cars" asp-action="Index" class="btn btn-secondary">
                                 ⬅️ Назад към моите автомобили
@@ -84,5 +76,32 @@
                 </div>
             </div>
         </div>
+
+        @if (oldRecords.Any())
+        {
+            <h4 class="mt-5 mb-3">Стари винетки</h4>
+
+            <div class="row">
+                @foreach (var item in oldRecords)
+                {
+                    bool isOldValid = item.ExpiryDate >= today;
+                    <div class="col-md-6 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p><strong>Дата на покупка:</strong> @item.PurchaseDate.ToString("dd.MM.yyyy")</p>
+                                <p><strong>Валидна до:</strong> @item.ExpiryDate.ToString("dd.MM.yyyy")</p>
+                                <p><strong>Статус:</strong> @(isOldValid ? "Валидна" : "Изтекла")</p>
+
+                                <!-- при старите няма "Редактирай" -->
+                                <form asp-action="Delete" method="post" class="mt-2">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button class="btn btn-sm btn-danger">Изтрий</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
     }
 </div>
