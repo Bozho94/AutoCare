@@ -3,7 +3,7 @@
 @model List<CivilLiabilityInsuranceVM>
 
 @{
-    ViewData["Title"] = "Гражданска отговорност";
+    ViewData["Title"] = "Застраховка \"Гражданска Отговорност\"";
 
     // взимаме carId от query (?carId=...)
     var carIdStr = Context.Request.Query["carId"].ToString();
@@ -14,7 +14,7 @@
 <div class="container mt-5">
 
     <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">
-        Гражданска отговорност
+        Застраховка "Гражданска Отговорност"
     </h2>
 
     <!-- бутонът "Добави" винаги да го има -->
