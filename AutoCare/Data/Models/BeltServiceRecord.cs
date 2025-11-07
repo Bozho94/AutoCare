@@ -14,7 +14,7 @@ namespace AutoCare.Data.Models
         public int CarId { get; set; }
 
         [ForeignKey(nameof(CarId))]
-        [InverseProperty(nameof(Car.BeltServiceRecord))]
+        [InverseProperty(nameof(Car.BeltServiceRecords))]
         public Car Car { get; set; } = null!;
 
         [Required(ErrorMessage = "Моля, въведете дата на смяна (ремъци и водна помпа)")]

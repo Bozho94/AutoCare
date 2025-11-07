@@ -38,20 +38,29 @@ namespace AutoCare.Data.Models
         [Display(Name = "Година на производство")]
         public int YearOfManufacture { get; set; }
 
-        [InverseProperty(nameof(OilServiceRecord.Car))]
-        public OilServiceRecord? OilServiceRecord { get; set; }
 
-        [InverseProperty(nameof(BeltServiceRecord.Car))]    
-        public BeltServiceRecord? BeltServiceRecord { get; set; }
+
+        // Navigation properties - One-to-Many relationships
+        // Each Car can have multiple related records (oil services, belts, vignettes, inspections, insurances).
+        // These collections reflect the one-to-many relationship design — each car can have
+        // more than one record (for example, a current record and previous ones).
+        // This supports the data model that allows "old records" to exist,
+        // In the future, these collections may also be used for a "Car Details" page to display all related data for a car.
+        [InverseProperty(nameof(OilServiceRecord.Car))]
+        public ICollection<OilServiceRecord> OilServiceRecords { get; set; } = new List<OilServiceRecord>();
+
+        [InverseProperty(nameof(BeltServiceRecord.Car))]
+        public ICollection<BeltServiceRecord> BeltServiceRecords { get; set; } = new List<BeltServiceRecord>();
 
         [InverseProperty(nameof(VignetteRecord.Car))]
-        public VignetteRecord? VignetteRecord { get; set; }
+        public ICollection<VignetteRecord> VignetteRecords { get; set; } = new List<VignetteRecord>();
 
         [InverseProperty(nameof(TechnicalInspectionRecord.Car))]
-        public TechnicalInspectionRecord? TechnicalInspectionRecord { get; set; }
+        public ICollection<TechnicalInspectionRecord> TechnicalInspectionRecords { get; set; } = new List<TechnicalInspectionRecord>();
 
         [InverseProperty(nameof(CivilLiabilityInsurance.Car))]
-        public CivilLiabilityInsurance? CivilLiabilityInsurance { get; set; }
+        public ICollection<CivilLiabilityInsurance> CivilLiabilityInsurances { get; set; } = new List<CivilLiabilityInsurance>();
+
 
 
     }

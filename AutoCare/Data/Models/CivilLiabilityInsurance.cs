@@ -15,7 +15,7 @@ namespace AutoCare.Data.Models
         public int CarId { get; set; }
 
         [ForeignKey(nameof(CarId))]
-        [InverseProperty(nameof(Car.CivilLiabilityInsurance))]
+        [InverseProperty(nameof(Car.CivilLiabilityInsurances))]
         public Car Car { get; set; } = null!;
 
         [Required(ErrorMessage = "Моля, въведете име на застраховател")]

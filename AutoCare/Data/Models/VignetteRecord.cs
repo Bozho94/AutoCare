@@ -13,7 +13,7 @@ namespace AutoCare.Data.Models
         public int CarId { get; set; }
 
         [ForeignKey(nameof(CarId))]
-        [InverseProperty(nameof(Car.VignetteRecord))]
+        [InverseProperty(nameof(Car.VignetteRecords))]
         public Car Car { get; set; } = null!;
 
         [Required(ErrorMessage = "Моля, въведете начална дата на валидност")]

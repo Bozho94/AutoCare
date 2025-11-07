@@ -13,7 +13,7 @@ namespace AutoCare.Data.Models
         public int CarId { get; set; }
 
         [ForeignKey(nameof(CarId))]
-        [InverseProperty(nameof(Car.TechnicalInspectionRecord))]
+        [InverseProperty(nameof(Car.TechnicalInspectionRecords))]
         public Car Car { get; set; } = null!;
 
         [Required(ErrorMessage = "Моля, въведете дата на прегледа")]
