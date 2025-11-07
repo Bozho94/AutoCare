@@ -47,6 +47,11 @@ footer {
     transform: none;
     filter: none;
 }
+.page-content .modal,
+.page-content .modal-backdrop {
+    transform: none !important;
+    filter: none !important;
+}
 
 
 
