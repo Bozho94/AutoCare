@@ -24,6 +24,32 @@ body {
     background-color: #f8fafc;
 }
 
+.page-content {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+    transition:
+        opacity 0.30s ease-out,
+        transform 0.30s ease-out,
+        filter 0.30s ease-out;
+}
+
+.page-content.show {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+header,
+nav,
+footer {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+
+
 
 
 
