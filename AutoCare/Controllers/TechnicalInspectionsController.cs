@@ -1,10 +1,12 @@
 ﻿using AutoCare.Services.Contracts;
 using AutoCare.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace AutoCare.Controllers
 {
+    [Authorize]
     public class TechnicalInspectionsController : Controller
     {
         private readonly ITechnicalInspectionService _service;
