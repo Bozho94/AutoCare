@@ -28,7 +28,8 @@
 - PostgreSQL  
 - Razor Pages  
 - Bootstrap 5  
-- HTML  
+- HTML&CSS
+- Javascript
 
 ---
 
@@ -75,7 +76,8 @@ It allows users to create accounts, register their cars, and monitor key mainten
 - PostgreSQL  
 - Razor Pages  
 - Bootstrap 5  
-- HTML  
+- HTML&CSS
+- Javascript
 
 ---
 
