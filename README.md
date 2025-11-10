@@ -3,44 +3,43 @@
 ### 🇧🇬 **Български**
 
 **AutoCare** е **ASP.NET Core MVC** уеб приложение за управление и поддръжка на автомобили.  
-Позволява на потребителите да създават профили, да добавят свои автомобили и да следят ключови събития от поддръжката – като **смяна на масло**, **ремъци и ролки**, **винетка**, **застраховка „Гражданска отговорност“** и **технически преглед**.  
+Позволява на потребителите да създават профили, да добавят свои автомобили и да следят всички важни събития от поддръжката – като **смяна на масло**, **ремъци и ролки**, **винетка**, **застраховка „Гражданска отговорност“** и **технически преглед**.  
 
 ---
 
-### 🔧 **Основни функционалности**
+## 🔧 **Основни функционалности**
 
 - 🔐 Регистрация и вход на потребители  
 - 🚘 Добавяне, редактиране и изтриване на автомобили  
-- 🧾 Проследяване на поддръжката за всяка кола:  
+- 🧾 Управление на записи за поддръжка:
   - Смяна на масло и филтри  
   - Смяна на ремъци и ролки  
-  - Винетка – дата на покупка и валидност  
+  - Винетка – покупка и валидност  
   - Технически преглед – срок на валидност  
   - Гражданска отговорност – начало и край на полицата  
-- 🇧🇬 Изцяло на български език  
+- 🗑️ Изтриване на профил и всички свързани данни  
+- 🇧🇬 Интерфейс изцяло на български език  
 
 ---
 
-### 🧩 **Технологии**
+## 🧩 **Технологии**
 
-- ASP.NET Core MVC  
-- Entity Framework Core  
-- PostgreSQL  
-- Razor Pages  
-- Bootstrap 5  
-- HTML&CSS
-- Javascript
+- 🧠 **Backend:** ASP.NET Core MVC и Razor Pages (за Identity)  
+- 🗃️ **База данни:** Entity Framework Core и PostgreSQL  
+- 🎨 **Frontend:** Bootstrap 5, HTML, CSS и JavaScript  
+- 🔒 **Автентикация:** ASP.NET Identity  
+- ☁️ **Хостинг:** Render.com  
 
 ---
 
-### ⚙️ **Статус**
+## ⚙️ **Статус на проекта**
 
 📘 **Версия:** *Beta*  
-🧪 Приложението е в процес на разработка и може да съдържа грешки.  
+🧪 Приложението е активно в разработка и може да съдържа несъвършенства.  
 
 ---
 
-### 🌐 **Демо**
+## 🌐 **Демо**
 
 🔗 [AutoCare on Render](https://autocare-b4fw.onrender.com)
 
@@ -51,43 +50,42 @@
 ### 🇬🇧 **English**
 
 **AutoCare** is an **ASP.NET Core MVC** web application for managing and tracking car maintenance.  
-It allows users to create accounts, register their cars, and monitor key maintenance events such as **oil changes**, **belt and roller replacements**, **vignette validity**, **civil liability insurance**, and **technical inspections**.  
+Users can create accounts, register their cars, and monitor key maintenance events such as **oil changes**, **belt and roller replacements**, **vignette validity**, **civil liability insurance**, and **technical inspections**.  
 
 ---
 
-### 🔧 **Features**
+## 🔧 **Features**
 
 - 🔐 User registration and login  
 - 🚘 Add, edit, and delete cars  
-- 🧾 Maintenance tracking per car:  
-  - Oil and filters replacement  
-  - Belts and rollers replacement  
+- 🧾 Manage maintenance records:
+  - Oil and filter replacements  
+  - Belt and roller replacements  
   - Vignette – purchase and expiry date  
   - Technical inspection – validity period  
-  - Civil liability insurance – policy start and end date  
+  - Civil liability insurance – start and end date  
+- 🗑️ Delete user account and all related data  
 - 🇧🇬 Fully localized user interface in Bulgarian  
 
 ---
 
-### 🧩 **Technologies**
+## 🧩 **Technologies**
 
-- ASP.NET Core MVC  
-- Entity Framework Core  
-- PostgreSQL  
-- Razor Pages  
-- Bootstrap 5  
-- HTML&CSS
-- Javascript
+- 🧠 **Backend:** ASP.NET Core MVC and Razor Pages (for Identity)  
+- 🗃️ **Database:** Entity Framework Core and PostgreSQL  
+- 🎨 **Frontend:** Bootstrap 5, HTML, CSS, and JavaScript  
+- 🔒 **Authentication:** ASP.NET Identity  
+- ☁️ **Hosting:** Render.com  
 
 ---
 
-### ⚙️ **Status**
+## ⚙️ **Project Status**
 
 📘 **Version:** *Beta*  
-🧪 The application is still under development and may contain bugs.  
+🧪 The project is currently under development and may contain bugs.  
 
 ---
 
-### 🌐 **Live Demo**
+## 🌐 **Live Demo**
 
 🔗 [AutoCare on Render](https://autocare-b4fw.onrender.com)
