@@ -3,11 +3,8 @@
 @model List<TechnicalInspectionVM>
 
 @{
-    ViewData["Title"] = "Технически прегледи";
 
-    var carIdStr = Context.Request.Query["carId"].ToString();
-    int carId = 0;
-    int.TryParse(carIdStr, out carId);
+    int carId = Model.FirstOrDefault()?.CarId ?? 0;
 }
 
 <div class="container mt-5">
