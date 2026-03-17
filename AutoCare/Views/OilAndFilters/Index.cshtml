@@ -2,11 +2,6 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model List<OilServiceVM>
 
-@{
-   
-    int carId = Model.FirstOrDefault()?.CarId ?? 0;
-}
-
 <div class="container mt-5">
 
     <h2 class="text-center mb-4" style="font-size: 2rem; font-weight: bold;">
@@ -14,7 +9,7 @@
     </h2>
 
     <div class="text-center mb-4">
-        <a asp-action="Create" asp-route-carId="@carId" class="btn btn-primary btn-lg">
+        <a asp-action="Create" asp-route-carId="@ViewBag.CarId" class="btn btn-primary btn-lg">
             <i class="bi bi-plus-circle"></i> Добави
         </a>
     </div>

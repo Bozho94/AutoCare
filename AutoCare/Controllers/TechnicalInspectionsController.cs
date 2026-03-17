@@ -10,22 +10,49 @@ namespace AutoCare.Controllers
     public class TechnicalInspectionsController : Controller
     {
         private readonly ITechnicalInspectionService _service;
+        private readonly ICarAccessService _carAccessService;
 
-        public TechnicalInspectionsController(ITechnicalInspectionService service)
+        public TechnicalInspectionsController(ITechnicalInspectionService service, ICarAccessService carAccessService)
         {
             _service = service;
+            _carAccessService = carAccessService;
         }
 
         public async Task<IActionResult> Index(int carId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, carId);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
+            ViewBag.CarId = carId;
+
             var model = await _service.GetAllAsync(userId, carId);
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Create(int carId)
+        public async Task<IActionResult> Create(int carId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, carId);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             return View(new TechnicalInspectionVM { CarId = carId });
         }
 
@@ -35,6 +62,18 @@ namespace AutoCare.Controllers
             if (!ModelState.IsValid)
             {
                 return View(vm);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, vm.CarId);
+            if (!owns)
+            {
+                return Forbid();
             }
 
             await _service.AddAsync(vm);
@@ -50,6 +89,18 @@ namespace AutoCare.Controllers
                 return NotFound();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, vm.CarId);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             return View(vm);
         }
 
@@ -61,6 +112,18 @@ namespace AutoCare.Controllers
                 return View(vm);
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, vm.CarId);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             await _service.EditAsync(vm);
             return RedirectToAction(nameof(Index), new { carId = vm.CarId });
         }
@@ -69,6 +132,24 @@ namespace AutoCare.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            var vm = await _service.GetByIdAsync(id);
+            if (vm == null)
+            {
+                return NotFound();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, vm.CarId);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             await _service.DeleteAsync(id);
             return Redirect(Request.Headers["Referer"].ToString());
         }

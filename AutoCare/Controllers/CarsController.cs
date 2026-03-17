@@ -1,4 +1,5 @@
-﻿using AutoCare.Services.Contracts;
+﻿using AutoCare.Services;
+using AutoCare.Services.Contracts;
 using AutoCare.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,13 @@ namespace AutoCare.Controllers
     public class CarsController : Controller
     {
         private readonly ICarService _carService;
+        private readonly ICarAccessService _carAccessService;
 
-        public CarsController(ICarService service)
+        public CarsController(ICarService service, ICarAccessService carAccessService)
         {
             _carService = service;
+            _carAccessService = carAccessService;
+     
         }
 
         [HttpGet]
@@ -59,6 +63,18 @@ namespace AutoCare.Controllers
                 return NotFound();
             }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, id);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             return View(model);
         }
 
@@ -69,6 +85,19 @@ namespace AutoCare.Controllers
             {
                 return View(carVm);
             }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, carVm.Id);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
             await _carService.EditAsync(carVm);
             return RedirectToAction(nameof(Index));
         }
@@ -77,8 +106,18 @@ namespace AutoCare.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            var owns = await _carService.UserOwnsCarAsync(userId, id);
-            if (!owns) return Forbid();
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var owns = await _carAccessService.UserOwnsCarAsync(userId, id);
+            if (!owns)
+            {
+                return Forbid();
+            }
+
 
             await _carService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));

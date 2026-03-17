@@ -96,9 +96,6 @@ namespace AutoCare.Services
             
         }
 
-        public async Task<bool> UserOwnsCarAsync(string userId, int carId)
-        {
-            return await _db.Cars.AnyAsync(c => c.Id == carId && c.UserId == userId);
-        }
+        
     }
 }
