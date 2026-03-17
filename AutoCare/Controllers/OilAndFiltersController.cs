@@ -32,7 +32,10 @@ namespace AutoCare.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(OilServiceVM vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            } 
             await _service.AddAsync(vm);
             return RedirectToAction(nameof(Index), new { carId = vm.CarId });
         }

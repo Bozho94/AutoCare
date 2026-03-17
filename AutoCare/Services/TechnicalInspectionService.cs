@@ -3,7 +3,7 @@ using AutoCare.Data.Models;
 using AutoCare.Services.Contracts;
 using AutoCare.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using static AutoCare.EntityValidationConstants.ValidationConstants;
+
 
 namespace AutoCare.Services
 {

@@ -3,7 +3,7 @@ using AutoCare.Data.Models;
 using AutoCare.Services.Contracts;
 using AutoCare.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using static AutoCare.EntityValidationConstants.ValidationConstants;
+
 
 namespace AutoCare.Services
 {
@@ -18,7 +18,7 @@ namespace AutoCare.Services
 
         public async Task AddAsync(CivilLiabilityInsuranceVM model)
         {
-            var entity = new Data.Models.CivilLiabilityInsurance
+            var entity = new CivilLiabilityInsurance
             {
                 CarId = model.CarId,
                 InsuranceCompanyName = model.InsuranceCompanyName,

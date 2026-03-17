@@ -39,9 +39,10 @@ namespace AutoCare.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+
             if (userId == null)
             {
-                return Challenge(); 
+                return Unauthorized(); 
             }
 
             await _carService.AddAsync(carVm, userId); 
@@ -52,6 +53,7 @@ namespace AutoCare.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             CarViewModel? model = await _carService.GetByIdAsync(id);
+
             if (model == null)
             {
                 return NotFound();
