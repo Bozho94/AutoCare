@@ -6,7 +6,6 @@ namespace AutoCare.Data.Models
 {
     public class TechnicalInspectionRecord
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -16,9 +15,7 @@ namespace AutoCare.Data.Models
         [InverseProperty(nameof(Car.TechnicalInspectionRecords))]
         public Car Car { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля, въведете дата на прегледа")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Дата на прегледа")]
+        [Required]
         [Column(TypeName = "date")]
         public DateOnly InspectionDate { get; set; }
     }

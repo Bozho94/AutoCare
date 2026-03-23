@@ -8,7 +8,6 @@ namespace AutoCare.Data.Models
   
     public class CivilLiabilityInsurance
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -18,20 +17,16 @@ namespace AutoCare.Data.Models
         [InverseProperty(nameof(Car.CivilLiabilityInsurances))]
         public Car Car { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля, въведете име на застраховател")]
-        [MaxLength(InsuranceCompanyNameMaxLength, ErrorMessage = "Името не може да бъде повече от 50 символа.")]
-        [Display(Name = "Застрахователна компания")]
+        [Required]
+        [MaxLength(InsuranceCompanyNameMaxLength)]
         public string InsuranceCompanyName { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля, въведете начална дата на валидност")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Дата на издаване")]
+        [Required]
         [Column(TypeName = "date")]
         public DateOnly IssueDate { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете дата на изтичане")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Дата на изтичане")]
+        [Required]
+        [Column(TypeName = "date")]
         public DateOnly ExpiryDate { get; set; }
     }
 }

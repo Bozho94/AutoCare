@@ -6,7 +6,6 @@ namespace AutoCare.Data.Models
 {
     public class VignetteRecord
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -16,15 +15,12 @@ namespace AutoCare.Data.Models
         [InverseProperty(nameof(Car.VignetteRecords))]
         public Car Car { get; set; } = null!;
 
-        [Required(ErrorMessage = "Моля, въведете начална дата на валидност")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Начална дата на валидност")]
+        [Required]
         [Column(TypeName = "date")]
         public DateOnly PurchaseDate { get; set; }
 
-        [Required(ErrorMessage = "Моля, въведете дата на изтичане")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Дата на изтичане")]
+        [Required]
+        [Column(TypeName = "date")]
         public DateOnly ExpiryDate { get; set; }
 
 
