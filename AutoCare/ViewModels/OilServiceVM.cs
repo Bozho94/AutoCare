@@ -16,7 +16,7 @@ namespace AutoCare.ViewModels
         public DateOnly OilChangeDate { get; set; }
 
         [Required(ErrorMessage = "Въведете пробег при смяната.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Пробегът трябва да е неотрицателен.")]
+        [Range(0, int.MaxValue)]
         [Display(Name = "Пробег (км)")]
         public int OdometerKm { get; set; }
 
