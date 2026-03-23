@@ -20,11 +20,11 @@ namespace AutoCare.Data.Models
         public DateOnly OilChangeDate { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue]
+        [Range(0, int.MaxValue)]
         public int OdometerKm { get; set; }
 
         [Required]
-        [MaxLength(OilViscosityMaxLength]
+        [MaxLength(OilViscosityMaxLength)]
         public string OilViscosity { get; set; } = null!;
 
         [MaxLength(OilAndFiltersBrandMaxLength)]
