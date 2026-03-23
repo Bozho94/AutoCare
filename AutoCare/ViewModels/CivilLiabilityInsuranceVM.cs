@@ -18,7 +18,6 @@ namespace AutoCare.ViewModels
         [Required(ErrorMessage = "Моля, въведете начална дата на валидност")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата на издаване")]
-        [Column(TypeName = "date")]
         public DateOnly IssueDate { get; set; }
 
         [Required(ErrorMessage = "Моля, въведете дата на изтичане")]
