@@ -71,7 +71,7 @@ Users can create accounts, register their cars, and monitor key maintenance even
 
 ## 🧩 **Technologies**
 
-- 🧠 **Backend:** ASP.NET Core MVC and Razor Pages (for Identity)  
+- 🧠 **Backend:** ASP.NET Core MVC   
 - 🗃️ **Database:** Entity Framework Core and PostgreSQL  
 - 🎨 **Frontend:** Bootstrap 5, HTML, CSS, and JavaScript  
 - 🔒 **Authentication:** ASP.NET Identity  
