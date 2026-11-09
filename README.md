@@ -24,7 +24,7 @@
 
 ## 🧩 **Технологии**
 
-- 🧠 **Backend:** ASP.NET Core MVC и Razor Pages (за Identity)  
+- 🧠 **Backend:** ASP.NET Core MVC 
 - 🗃️ **База данни:** Entity Framework Core и PostgreSQL  
 - 🎨 **Frontend:** Bootstrap 5, HTML, CSS и JavaScript  
 - 🔒 **Автентикация:** ASP.NET Identity  
